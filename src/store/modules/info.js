@@ -23,7 +23,7 @@ export const mutations = {
   SET_INFO(state, info) {
     state.info = info.map(item => pick(item, Object.values(state.columns)))
   },
-  SET_VISIBLE_INFO(state, dispatch) {
+  SET_VISIBLE_INFO(state) {
     state.visibleInfo = state.info.map(item => pick(item, Object.values(state.visibleColumns)))
     if (state.searchInfo) {
       commit('SEARCH_INFO', state.searchInfo)
@@ -49,27 +49,30 @@ export const mutations = {
     state.searchParam = info
     state.visibleInfo = state.visibleInfo.filter(i => {
       return Object.values(i).some(item => {
-        return item.toLowerCase().indexOf(info.toLowerCase()) != -1
+        return item.toLowerCase().indexOf(state.searchParam.toLowerCase()) != -1
       })
     })
-    console.log(state.visibleInfo)
   }
 }
 
 export const actions = {
-  fetchInfo({ commit }) {
+  fetchInfo({ commit, dispatch }) {
     return getInfo().then(res => {
       commit('SET_INFO', res.data)
       commit('SET_COLUMNS')
       commit('SET_VISIBLE_INFO')
+      dispatch('pagination/pagination', res.data.length, { root: true })
     })
   },
-  toggleColumn({ commit }, { column }) {
+  toggleColumn({ dispatch, commit, state }, { column }) {
     commit('TOGGLE_COLUMN', column)
-    dispatch('SEARCH_INFO')
     commit('SET_VISIBLE_INFO')
+    commit('SEARCH_INFO', state.searchParam)
+    dispatch('pagination/pagination', state.visibleInfo.length, { root: true })
   },
-  searchInfo({ commit }, { info }) {
+  searchInfo({ commit, dispatch, state }, { info }) {
+    commit('SET_VISIBLE_INFO')
     commit('SEARCH_INFO', info)
+    dispatch('pagination/pagination', state.visibleInfo.length, { root: true })
   }
 }

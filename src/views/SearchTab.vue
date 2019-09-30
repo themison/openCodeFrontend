@@ -5,25 +5,25 @@
       <button class="dropbtn">Редактировать таблицу</button>
       <div class="dropdown-content" @click.prevent="(e)=>{toggleColumn(e)}">
         <a href name="business_name">
-          <i class="fas fa-times icon"></i> Название организации
+          <i class="fas fa-check icon"></i> Название организации
         </a>
         <a name="business_address" href>
-          <i class="fas fa-times icon"></i> Адрес организации
+          <i class="fas fa-check icon"></i> Адрес организации
         </a>
         <a name="business_city" href>
-          <i class="fas fa-times icon"></i> Город организации
+          <i class="fas fa-check icon"></i> Город организации
         </a>
         <a name="business_phone_number" href>
-          <i class="fas fa-times icon"></i> Номер организации
+          <i class="fas fa-check icon"></i> Номер организации
         </a>
         <a name="inspection_date" href>
-          <i class="fas fa-times icon"></i> Дата инспекции
+          <i class="fas fa-check icon"></i> Дата инспекции
         </a>
         <a name="inspection_description" href>
-          <i class="fas fa-times icon"></i> Статус инспекции
+          <i class="fas fa-check icon"></i> Статус инспекции
         </a>
         <a name="inspection_type" href>
-          <i class="fas fa-times icon"></i> Тип проведения инспекции
+          <i class="fas fa-check icon"></i> Тип проведения инспекции
         </a>
       </div>
     </div>
@@ -52,16 +52,12 @@ export default {
       })
     },
     toggleIcon(icon) {
-      console.dir(icon)
       if (icon.classList.contains('fa-times')) {
         icon.classList.remove('fa-times')
         icon.classList.add('fa-check')
-        console.log(icon.classList)
       } else {
-        console.log(123)
         icon.classList.remove('fa-check')
         icon.classList.add('fa-times')
-        console.log(icon.classList)
       }
     }
   },

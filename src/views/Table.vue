@@ -13,12 +13,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in items"
-            :key="index"
-            v-show="visibleRow(item) ? true : false"
-            class="table-row"
-          >
+          <tr v-for="(item, index) in items" :key="index" class="table-row">
             <td
               v-for="(column, indexColumn) in itemsColumns"
               :key="indexColumn"
@@ -50,16 +45,6 @@ export default {
     visibleItem(column) {
       return Object.values(this.info.visibleColumns).indexOf(column) != -1
     },
-    visibleRow(item) {
-      if (this.info.searchParam == '') {
-        return true
-      } else {
-        return Object.values(item).some(
-          i =>
-            i.toLowerCase().indexOf(this.info.searchParam.toLowerCase()) != -1
-        )
-      }
-    },
     ...mapActions('info', ['fetchInfo'])
   },
   computed: {
@@ -73,9 +58,12 @@ export default {
       return Object.values(this.info.columns)
     },
     items() {
-      return this.info.info
+      return this.info.visibleInfo.slice(
+        this.pagination.start,
+        this.pagination.end
+      )
     },
-    ...mapState(['info'])
+    ...mapState(['info', 'pagination'])
   }
 }
 </script>
@@ -89,15 +77,20 @@ export default {
   border-collapse: collapse;
 }
 
+.table-header {
+  max-height: 60px;
+}
+
 .head-cell {
   border-bottom: 2px solid gray;
   padding-bottom: 10px;
 }
 .table-cell {
   font-size: 14px;
+  max-width: 15px;
 }
 
-tbody tr:nth-child(even) {
+.table-row:nth-child(even) {
   background-color: #dfdfdf;
 }
 
@@ -105,10 +98,7 @@ tbody tr:nth-child(even) {
   height: 50px;
 }
 
-.table-row:not(:last-child) {
+.table-row {
   border-bottom: 1px solid gray;
-}
-th:not(:first-child),
-td:not(:first-child) {
 }
 </style>

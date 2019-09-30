@@ -17,8 +17,8 @@ export default {
     SearchTab,
     Paginate
   },
-  created() {
-    this.$store.dispatch('info/fetchInfo')
+  mounted() {
+    this.$store.dispatch('info/fetchInfo').then(() => {})
   }
 }
 </script>
@@ -33,7 +33,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: 100%;
-  width: 85vw;
+  width: 80vw;
   margin: 40px auto;
   text-align: center;
 }
