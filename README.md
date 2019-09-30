@@ -2,9 +2,9 @@
 
 # commands:
 
-npm run dev to run server and client \n
-npm run server for server \n
-npm run client for client \n
+npm run dev to run server and client <br/>
+npm run server for server <br/>
+npm run client for client <br/>
 
 # before:
 
